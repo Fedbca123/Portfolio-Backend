@@ -1,0 +1,21 @@
+# C# build artifacts
+bin/
+obj/
+
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.sln.docstates
+
+# NuGet packages
+*.nuget.props
+*.nuget.targets
+
+# GraphQL schema and generated code
+*.graphql
+*.gql
+*.graphql.cs
+*.graphql.g.cs
+
+.env

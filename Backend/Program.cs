@@ -1,12 +1,10 @@
 using System.Dynamic;
-using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.Newtonsoft;
 using dotenv.net;
 using Markdig;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 public class Program
 {
@@ -23,45 +21,6 @@ public class Program
         var graphQLClient = new GraphQLHttpClient("https://api.github.com/graphql", new NewtonsoftJsonSerializer());
         graphQLClient.HttpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
 
-        // var query = new GraphQLRequest
-        // {
-        //     Query = @"
-        //     {
-        //         viewer {
-        //             pinnedItems(first: 6, types: REPOSITORY) {
-        //                 edges {
-        //                     node {
-        //                         ... on Repository {
-        //                             name
-        //                             description
-        //                             url
-        //                             languages(first: 10) {
-        //                                 edges {
-        //                                     node {
-        //                                         name
-        //                                     }
-        //                                 }
-        //                             }
-        //                         }
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }"
-        // };
-
-        // var response = await graphQLClient.SendQueryAsync<dynamic>(query);
-
-        // // string markdown = /* your markdown content */;
-        // // string plainText = Markdig.Markdown.ToPlainText(markdown);
-
-        // // Console.WriteLine(response.Data);
-
-        // string json = JsonConvert.SerializeObject(response.Data, Formatting.Indented);
-
-        // Console.WriteLine(json);
-
-        // Modify your GraphQL query to fetch the README file
         var query = new GraphQLRequest
         {
             Query = @"

@@ -28,6 +28,7 @@ public class GithubService
                                 ... on Repository {
                                     name
                                     url
+                                    description
                                     languages(first: 10) {
                                         edges {
                                             node {
@@ -55,14 +56,17 @@ public class GithubService
         foreach (var node in (IEnumerable<dynamic>)response.Data.viewer.pinnedItems.edges)
         {
             dynamic project = new ExpandoObject();
-            project.name = node.node.name;
+
+            // Check if node.node.name contains "-" and replace with " "
+            project.name = node.node.name != null ? node.node.name.ToString().Replace("-", " ") : null;
             project.url = node.node.url;
-            project.stack = ((IEnumerable<dynamic>)node.node.languages.edges).Select(lang => (string)lang.node.name).ToArray();
+            // Check if repo description is not null before splitting
+            project.stack = node.node.description != null ? node.node.description.ToString().Split(", ") : new string[0];
 
             // Added null check in case I forget to add a Readme to a project
             if (node.node.@object != null)
             {
-                project.description = Markdown.ToPlainText(node.node.@object.text.ToString());
+                project.description = Markdown.ToPlainText(node.node.@object.text.ToString().Replace("\\n", " \\n "));
             }
             else
             {

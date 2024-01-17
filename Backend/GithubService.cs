@@ -66,7 +66,8 @@ public class GithubService
             // Added null check in case I forget to add a Readme to a project
             if (node.node.@object != null)
             {
-                project.description = Markdown.ToPlainText(node.node.@object.text.ToString().Replace("\\n", " \\n "));
+                //specific check to remove list of people for Our Cooking mama site, but not remove it from actual repo readme bc I didn't wanna do that and not give credit to my team who helped make the project
+                project.description = Markdown.ToPlainText(node.node.@object.text.ToString().Replace("Our Cooking Mama", "").Replace("Project Manager: Geela Margo Ramos", "").Replace("API/Backend: Marc Cross and Taniya Shaffer", "").Replace("Mobile: Cristian Merino and Chrystian Orren", "").Replace("Frontend: Rachel Biesiedzinski and Omar Shalaby", "").Replace("Database: Iliya Klishin", "").Replace("\n-", ", ").Replace("\".\"", "\"Our Cooking Mama.\""));
             }
             else
             {
